@@ -39,3 +39,60 @@ VALUES ('alice', 'alicepass', 'alice@example.com');
 INSERT INTO user (username, password, email)
 VALUES ('bob', 'bobpass', 'bob@example.com');
 ```
+
+Open `localhost:8000`.
+
+# Notes
+
+If you want to add PHPMyAdmin Service, you can add in `docker-compose.yml` at `services`.
+
+```yml
+version: '3.7'
+
+services:
+  # ...
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: codeigniter_phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - ci_network
+
+networks:
+  ci_network:
+
+volumes:
+  db_data:
+
+```
+
+..or you can expose the MySQL port and use MySQL Client like MySQL Workbench
+to connect to the database.
+
+```yaml
+version: '3.7'
+
+services:
+ #...
+  db:
+    image: mysql:5.7
+    container_name: codeigniter_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: codeigniter
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306" # Expose MySQL port to localhost
+    networks:
+      - ci_network
+```
