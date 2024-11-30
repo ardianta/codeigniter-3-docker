@@ -1,6 +1,6 @@
 # Codeigniter 3 on Docker
 
-Run Codeigniter 3 project inside docker.
+Run Codeigniter 3 project inside docker. Codeigniter v3.1.13.
 
 Docker Services:
 - PHP FCM 5.6 to run codeigniter application
